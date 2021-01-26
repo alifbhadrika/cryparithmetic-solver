@@ -1,5 +1,3 @@
-import re
-import itertools
 import time
 
 def main():
@@ -73,19 +71,28 @@ def printSolution(operands,value,letterValue):
     for val_letter in value_letter:
         print("{}".format(letterValue[val_letter]),end="")
 
+def permutation(listInput,n,r):
+    '''
+    permutasi dengan mengadopsi algoritma heap
+    '''
+    if n == 1:
+        yield listInput[:r]
+    else:
+        for i in range(n-1):
+            for perm in permutation(listInput,n-1,r): 
+                yield perm
+            if (n % 2) == 1: 
+                j=0
+            else: 
+                j=i
+            listInput[j],listInput[n-1] = listInput[n-1],listInput[j]
+        for perm in permutation(listInput,n-1,r): 
+            yield perm
+
 def solve(words):
     '''
     solve akan memproses persamaan penjumlahan dan mengembalikan
     solusi crypariitmetic puzzle
-    Algoritma:
-    1. membuat list letters yang terdiri setiap huruf unique yang ada pada persamaan
-    2. mengidentifikasi kata pada operan dan hasil penjumlahan
-    3. melakukan permutasi, yaitu menyusun digit 0-9 pada n buah huruf pada list letter
-       dengan syarat huruf pertama pada hasil penjumlahan tidak boleh bernilai 0
-    4. Substitusi setiap hasil permutasi pada persamaan, cek apakah jumlah operan sama 
-       dengan hasil persamaan
-    5. Jika tidak sama, ulangi langkah 3
-    6. Jika sesuai, maka solusi ditemukan
     '''
 
     letters_from_words = ''.join(words)
@@ -100,7 +107,8 @@ def solve(words):
     first_letter = value[0]                 # character pertama dari value (hasil penjumlahan)
 
     tescount = 0
-    for perm in itertools.permutations(range(10), len(letters)):
+    digits = [dig for dig in range(10)]
+    for perm in permutation(digits, len(digits),len(letters)):
         letterValue = dict(zip(letters, perm))
         tescount += 1
 
