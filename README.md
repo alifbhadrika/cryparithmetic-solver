@@ -4,7 +4,11 @@
 Tugas Kecil 1 IF2211 Strategi Algoritma
 Semester II tahun 2020/2021
 
-## How to use:
+## How to use
+1. Open bin folder
+2. Run executable file named "main"
+
+### OR
 1. Add or customize input text file in test folder 
 2. Open src folder in terminal
 3. Run main.py
